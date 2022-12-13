@@ -1,0 +1,30 @@
+nav{
+    display: flex;
+    flex-direction: row;
+    /* padding-right: 30px; */
+}
+.item1{
+    flex-grow: 6;
+    
+}
+.item5{
+    text-align: left;
+    padding-left: 20px;
+    flex-grow: 1;
+}
+.item2{
+    flex-grow: 1;
+}
+.item3{
+    flex-grow: 1;
+}
+.item4{
+    flex-grow: 1;
+    padding-right: 30px;
+}
+.item6{
+    /* flex-grow: 1; */
+    float: right;
+    padding-right: 50px;
+}
+.courier { font-family: 'Courier Next', courier, monospace; }

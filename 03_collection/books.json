@@ -1,0 +1,96 @@
+[{
+  "_id": {
+    "$oid": "639803687d9578215ef47702"
+  },
+  "title": "A Monk who sold his ferrari",
+  "author": "Robin Sharma",
+  "price": 160,
+  "quantity": 3,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670906728892"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670922000635"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "639803867d9578215ef47706"
+  },
+  "title": "Think like a monk",
+  "author": "Jay Shetty",
+  "price": 260,
+  "quantity": 4,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670906758139"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670922548940"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6398039c7d9578215ef4770a"
+  },
+  "title": "BhagwadGita",
+  "author": "Shri Krishna",
+  "price": 0,
+  "quantity": 14,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670906780898"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670934971752"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63983f5fb45780f86b5573bf"
+  },
+  "title": "India that is Bharat",
+  "author": "Jai Sai Deepak",
+  "price": 478,
+  "quantity": 2,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670922079951"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670923891395"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63983f6eb45780f86b5573c3"
+  },
+  "title": "5am Club",
+  "author": "Robin Sharma",
+  "price": 400,
+  "quantity": 1,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670922094950"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670927073142"
+    }
+  },
+  "__v": 0
+}]

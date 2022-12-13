@@ -1,0 +1,81 @@
+[{
+  "_id": {
+    "$oid": "639722ba7fc24dae5261dab9"
+  },
+  "name": "Ankit Khedar",
+  "email": "ankit.khedar@biz4group.com",
+  "password": "$2b$08$uysZTMx6MkXVm1Ju7RwmbuAePMPF8jXnzJj5x11r55PYuWwBH4PC6",
+  "role": "admin",
+  "status": "active",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670849210757"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670849210757"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6397240b8849841066ef3362"
+  },
+  "name": "Anil Kumar",
+  "email": "kumaranil12@gmail.com",
+  "password": "$2b$08$xhZC.DveiPIWuNiiUB8NI.1VSMR522Ac7V/GGD8yRJZ.b96eUjzTW",
+  "role": "user",
+  "status": "active",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670849547519"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670909751683"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "639837bd2a248fcc140e4e5a"
+  },
+  "name": "Ankit",
+  "email": "ankit@gmail.com",
+  "password": "$2b$08$gO47CHdBIqDTleISRj56BOrr1o6Jfos8aKUG8/HmPhwLS3D62iMaG",
+  "role": "user",
+  "status": "active",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670920125936"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670920125936"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "639870b6524c4304b8463423"
+  },
+  "name": "Khedar",
+  "email": "khedar123@gmail.com",
+  "password": "$2b$08$E5YlxrMMhYO3fkTSq92WQOL6R93EKsJok9tjlnA4Q0t5gqlP8P62u",
+  "role": "user",
+  "status": "active",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1670934710212"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1670934710212"
+    }
+  },
+  "__v": 0
+}]
