@@ -20,9 +20,9 @@ function ReqList() {
         method: "get",
         url: "http://localhost:5001/api/requestslist",
         headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
-        // body: localStorage.getItem("_id")
+        
       }).then((res)=> {
-        console.log("Admin Profile Response",res);
+        console.log("Requests Response: ",res);
         setvalue(res.data);
       });
     }
@@ -33,7 +33,7 @@ function ReqList() {
         url: `http://localhost:5001/api/editstatus`,
         headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
         data: { status: 'Accepted', bookId: id},
-      }).then((res)=> {
+      }).then(()=> {
         getData();
       });
     }
@@ -43,7 +43,7 @@ function ReqList() {
         url: `http://localhost:5001/api/editstatus`,
         headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
         data: { status: 'Rejected', bookId: id},
-      }).then((res)=> {
+      }).then(()=> {
         getData();
       });
  }

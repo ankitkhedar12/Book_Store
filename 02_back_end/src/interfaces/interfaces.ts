@@ -35,3 +35,7 @@ export interface IEditStatus{
     status: string,
     bookId: string
 }
+
+export interface IUserReqList{
+    id: string
+}

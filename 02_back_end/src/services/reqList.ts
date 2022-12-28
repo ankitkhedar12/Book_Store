@@ -1,10 +1,8 @@
 import { Request, RequestHandler, Response } from 'express';
 import { IssueBookRequest } from '../models/issueRequest';
 
-export  const reqList: RequestHandler = async (req: Request, res: Response)=> {    
-
-    const requests = await IssueBookRequest.find({});
-
+export  const reqList: RequestHandler = async ()=> {    
+    //Fetching request data with names of user and book from their id's
     const data = await IssueBookRequest.aggregate([
         {
             $lookup: {
@@ -44,11 +42,11 @@ export  const reqList: RequestHandler = async (req: Request, res: Response)=> {
             }
         }
     ]);
-    console.log(data);
-    if(requests)
+    
+    if(data)
     {
-        return res.send(data);
+        return data;
     }
     else
-    return res.status(400).json({err: "No Requests Found"});
+    return {err: "No Requests Found"};
 }

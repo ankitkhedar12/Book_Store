@@ -15,7 +15,7 @@ const authUser = async (req: Request, res: Response, next: NextFunction) => {
       const user = await User.findOne({_id: req.headers.id})
       
       const role = user?.role
-
+      
       if(role === 'user'){
         next()
       }
