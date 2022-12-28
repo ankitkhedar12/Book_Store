@@ -35,8 +35,8 @@ export default function Login() {
       theme: "light",
       });
   };
-  const notifya = () => {
-    toast('Email not found!', {
+  const userNotFound = () => {
+    toast('User not registered!', {
       position: "top-center",
       autoClose: 1100,
       hideProgressBar: false,
@@ -71,50 +71,37 @@ export default function Login() {
       theme: "light",
       });
   };
-  const adminNotify = () => {
-    toast('Namestey Admin ´◡`', {
-      position: "top-center",
-      autoClose: 1100,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  };
+  
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({ resolver })
   const onSubmit = handleSubmit(async (info) => {
     console.log("Info:",info)
     const res: AxiosResponse<any, any> = await axios.post("http://localhost:5001/api/signin", info)
-    // .then((res)=> console.log(res));
-    // console.log("res",res);
-    if(res.data.value === 1){
-    console.log("LoginRes",res);
-    // console.log("token", res.data.token);
-    // console.log("id", res.data.user._id);
-      notify();
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('_id', res.data.user._id);
-      setTimeout(()=>navigate('/userprofile'),1300)
+    
+    switch(res.data.msg){
+      case "Welcome Back":
+        console.log("LoginResponse :",res);
+        notify();
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('_id', res.data.user._id);
+        setTimeout(()=>navigate('/userprofile'),1000)
+        break;
+      case "User not registered":
+        userNotFound();
+        break;
+      case "User is Deactivated":
+        inactive();
+        break;
+      case "Invalid Credentials":
+        invalid();
+        break;
+      case "Admin Login":
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('_id', res.data.user._id);
+        navigate("/admin", {state:{fromSignup: true}})
+        break;
+      default: 
+        console.log("Error")
     }
-    if(res.data.value === 2){
-      notifya();
-    }
-    if(res.data.value === 3){
-      invalid();
-    }
-    if(res.data.value === 4){
-      inactive();
-    }
-    if(res.data.value === 5){
-      adminNotify();
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('_id', res.data.user._id);
-      setTimeout(()=> navigate("/admin"), 1300)
-    }
-    // notify()
-    // console.log(info,"Response", res);
   });
   return (
     <>

@@ -31,9 +31,10 @@ const BooksList=()=> {
       console.log("DeleteBook Id",id)
       await axios({
         method: "post",
-        url: `http://localhost:5001/api/deletebooks?id=${id}`,
+        // url: `http://localhost:5001/api/deletebooks?id=${id}`,
+        url: `http://localhost:5001/api/deletebooks`,
         headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
-        // body: localStorage.getItem("_id")
+        data: { bookId: id }
       })
       getData();
     }

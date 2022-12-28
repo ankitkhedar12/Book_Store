@@ -47,17 +47,21 @@ export default function Signup () {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    const res = await axios.post("http://localhost:5001/api/signup", data);
-    if(res.data.value === 1){
-      console.log(res.data.value)
-      userExistnotify();
-    };
-    if(res.data.value === 4){
-      loginNotify();
-      navigate("/signin")
-    };
-    
-    console.log("response dataaaaaaaaaa", res);
+    const res = await axios.post("http://localhost:5001/api/signup", {...data, role: 'user', status: 'active'});
+
+    console.log("Signup Res: ", res);
+
+    switch(res.data.msg){
+      case "User Already Exist. Please Signin":
+        userExistnotify();
+        break;
+      case "Please Login":
+        loginNotify();
+        navigate("/signin", {state:{fromSignup: true}});
+        break;
+      default:
+        console.log("Something went wrong in SigningUp");
+    }
   });
   return (
     <>

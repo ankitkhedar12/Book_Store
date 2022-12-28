@@ -1,60 +1,47 @@
-import { Request, RequestHandler, Response } from 'express';
-import dotenv from 'dotenv';
 import { IssueBookRequest } from '../models/issueRequest';
 import { BookModel } from '../models/bookModel';
+import { IRequest } from '../interfaces/interfaces';
 
+export default async function issueBooks(data: IRequest){
+  try {
+    const { user_id, book_id, status, from_date, to_date } = data;
 
-dotenv.config({
-    path: '.env'
-  });
-
-export default async function issueBooks(req: Request, res: Response){
-    const { user_id, book_id, status, from_date, to_date } = req.body;
-
-    // console.log(from_date, to_date)
+    //Validation if date are selected or not
     if(from_date === undefined){
-      return res.status(200).json({value: 2})
+      return {msg: "from_date_not_selected", status: 200};
     }
     if(to_date === undefined){
-      return res.status(200).json({value: 3})
+      return {msg: "end_date_not_selected", status: 200};
     }
-     const checking = await IssueBookRequest.findOne(
-      { user_id: user_id, book_id: book_id },
+    
+    //If user has already added one book, he should not be able to add more
+    const reqAlreadyExist = await IssueBookRequest.findOne({ user_id: user_id, book_id: book_id })
+      if(reqAlreadyExist){
+        return {msg: "Request Exists", status: 200};
+      }
+
+    //Checks whether book quantity is 0 or not, also updates the value of new book quantity
+    const book = await BookModel.findOne({_id: book_id});
+    const newBookquantity = book?.quantity;
+    if(newBookquantity){
+      await BookModel.updateOne(
+        { _id: book_id },
+        {
+          $set: { quantity: newBookquantity-1 },
+          $currentDate: { lastModified: true }
+        }
       )
-      console.log("checking", checking);
-      if(checking){
-        return res.status(200).json({value: 5})
-      }
-
-    // Create New Book Issue Request
-    const issueRequest = new IssueBookRequest({ user_id, book_id, status, from_date, to_date });
-    // Save
-    await issueRequest.save(async (err, bookRequest) => {
-      if(err)
-      {
-          return res.status(400).json({msg: (err)});
-      }
-
-      const book = await BookModel.findOne({_id: book_id});
-      const newBookquantity = book?.quantity;
-      if(newBookquantity){
-        await BookModel.updateOne(
-          { _id: book_id },
-          {
-            $set: { quantity: newBookquantity-1 },
-            $currentDate: { lastModified: true }
-          }
-       )
-       console.log("NewBookQuantity: ",newBookquantity-1)
-      }
-      else{
-        return res.status(200).json({value: 4})
-      }
+    }
+    else{
+      return {msg: "Book not available", status: 200}
+    }
       
-      // user.hashed_password = undefined;
-      // user.salt = undefined;
-      return res.status(200).json({value: 1});
-      // console.log("Book Created: ", bookRequest);
-      // res.json({bookRequest});
-  })
+    // Create New Book Issue Request
+    await IssueBookRequest.create({ user_id, book_id, status, from_date, to_date });
+
+    return {msg: "Book Requested", status: 200};
+  } catch (error) {
+    console.log("Error in issueBook api: ", error);
+  }
+
 }

@@ -41,5 +41,5 @@ server.app.use(express.urlencoded({
 server.app.use('/api/', routes);
 
 // make server listen on some port //
-const port = process.env.APP_PORT || 5001;
+const port = process.env.APP_PORT;
 server.app.listen(port, () => console.log(`> Listening on port ${port}`));

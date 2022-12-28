@@ -23,8 +23,8 @@ const AddBook=()=> {
       });
     const navigate = useNavigate();
 
-    const errorNotify = () => {
-        toast('Book Already Exist. or Updated quantity', {
+    const addedNotify = () => {
+        toast('Book Added', {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -37,7 +37,7 @@ const AddBook=()=> {
     };
 
     const bookExistnotify = () => {
-        toast('🦄 Book Added', {
+        toast('Book Already Exist.', {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -56,13 +56,16 @@ const AddBook=()=> {
         headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
         data: data,
       }).then((res)=> {
-        console.log("Admin Profile Response",res);
-        // setValue(res.data);
-        if(res.data.value === 1){
-          console.log(res.data.value)
-            errorNotify();
-        }else{
+        console.log("AddBooks Response",res);
+        switch(res.data.msg){
+          case "Book Already Exist":
             bookExistnotify();
+            break;
+          case "Book Added":
+            addedNotify();
+            break;
+          default:
+            console.log("Error while adding Books")
         }
       });
     });

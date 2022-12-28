@@ -30,9 +30,9 @@ function ReqList() {
 
       await axios({
         method: "put",
-        url: `http://localhost:5001/api/editstatus?id=${id}`,
+        url: `http://localhost:5001/api/editstatus`,
         headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
-        data: { status: 'Accepted'},
+        data: { status: 'Accepted', bookId: id},
       }).then((res)=> {
         getData();
       });

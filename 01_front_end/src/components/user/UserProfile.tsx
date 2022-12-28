@@ -111,21 +111,26 @@ function UserProfile() {
         headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
         data: {user_id: localStorage.getItem('_id'), book_id: bookid, status: 'Pending', from_date: startDate , to_date: endDate },
       }).then((res) => {
-        console.log("BookRes",res);
-        if(res.data.value === 1){
-            notify();
-          }
-        if(res.data.value === 2){
-            fromdatenotify();
-          }
-        if(res.data.value === 3){
-            enddatenotify();
-          }
-        if(res.data.value === 4){
-            bookquantitynotify();
-          }
-        if(res.data.value === 5){
-            issueerrornotify();
+        console.log("UserProfile BookRes",res);
+
+          switch(res.data.msg){
+            case "Book Requested":
+              notify();
+              break;
+            case "from_date_not_selected":
+              fromdatenotify();
+              break;
+            case "end_date_not_selected":
+              enddatenotify();
+              break;
+            case "Request Exists":
+              issueerrornotify();
+              break;
+            case "Book not available":
+              bookquantitynotify();
+              break;
+            default: 
+              console.log("Error in issueBook api calling");
           }
 });
       getData();
@@ -199,9 +204,6 @@ function UserProfile() {
       }
       </table>
       
-      <header className="App-header">
-        <img src={ logo } className="App-logo" alt="logo" />
-      </header>
       <button onClick={logout}>Logout</button>
       <ToastContainer
             position="top-center"

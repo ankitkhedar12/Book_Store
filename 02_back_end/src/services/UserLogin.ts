@@ -4,49 +4,51 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { User } from '../models/user';
+import envData from '../config/env.config';
+import { Constants } from '../constants/constants';
+import { ISigninData } from '../interfaces/interfaces';
 
 dotenv.config({
     path: '.env'
   });
 
-export default async function signin(req: Request, res: Response){
-    const email = req.body.email;
-    console.log(req.body)
+export default async function signin(data: ISigninData){
+    try {
+        const { email, password } = data;
 
-    const user = await User.findOne({email});
-    console.log("LoginUser: ",user);
-    // If user is found
-    if(user)
-    {
-        const password1 = req.body.password;
-        const password2 = await bcrypt.compare(password1, user.password)
+        const user = await User.findOne({ email });
 
-        if(user.status === 'Deactivated'){
-            return res.status(200).json({err: "User is inactive", value: 4})
-        }
-        // make sure email and password match
-        // create authenticate method in user model
-        if(!password2)
+        // If user is found
+        if(user)
         {
-            return res.status(200).json({err: "Invalid Credentials", value: 3})
+            const{ _id} = user;
+
+            //Checking if founded user is deactivaed or not
+            if(user.status === 'Deactivated'){
+                return {msg: "User is Deactivated", status: 200}
+            }
+            
+            // make sure email and password match
+            // create authenticate method in user model
+            const isValidPass = await bcrypt.compare(password, user.password)
+
+            if(!isValidPass)
+            {
+                return {msg: "Invalid Credentials", status: 200}
+            }
+
+            // generate a signed token with user id and secret
+            const token = jwt.sign({id:user._id}, envData.jwt_secret)
+
+            // return response with user and send to client
+            if(user.role === Constants.admin){
+                return {msg: "Admin Login",token, user: {_id, email}};
+            }
+            return {msg: "Welcome Back",token, user: {_id, email}};
         }
-
-        // generate a signed token with user id and secret
-        const token = jwt.sign({id:user._id}, "JWT_SECRET")
-
-        // return response with user and send to client
-        const{ _id, email, password } = user;
-
-        if(user.role === 'admin'){
-            return res.status(200).json({token, user: {_id, email, password}, value: 5});
-        }
-
-        return res.status(200).json({token, user: {_id, email, password}, value: 1});
-        // return res.status(200).json({token, email, value: 1});
-
+        else
+        return {msg: "User not registered"};
+    } catch (error) {
+        console.log("Error in UserLogin api: ", error);
     }
-
-
-    else
-    return res.status(200).json({err: "Email not found", value: 2})
 }
