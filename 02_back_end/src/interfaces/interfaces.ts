@@ -30,3 +30,8 @@ export interface IRequest{
     from_date: string,
     to_date:string
 }
+
+export interface IEditStatus{
+    status: string,
+    bookId: string
+}

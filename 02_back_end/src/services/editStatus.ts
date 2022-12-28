@@ -1,13 +1,9 @@
-import { Request, RequestHandler, Response } from 'express';
-import dotenv from 'dotenv';
 import { IssueBookRequest } from '../models/issueRequest';
+import { IEditStatus } from '../interfaces/interfaces';
 
-dotenv.config({
-    path: '.env'
-  });
 
-export default async function editStatus(req: Request, res: Response){
-    const { status, bookId } = req.body;
+export default async function editStatus(data: IEditStatus){
+    const { status, bookId } = data;
 
     // Update Status
     try{
@@ -20,11 +16,10 @@ export default async function editStatus(req: Request, res: Response){
          )
          const request = await IssueBookRequest.findOne({_id: bookId})
          console.log(request);
-        res.json(request);
+        return ({request, msg: "Book Request updated"});
     }
     catch(err){
-      consl
+      console.log("Error in editStatus api: ", err);
         return {msg: (err)};
     }
-    // res.json("Updated");
 }
