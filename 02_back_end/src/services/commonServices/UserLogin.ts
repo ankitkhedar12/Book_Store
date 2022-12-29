@@ -22,7 +22,7 @@ export default async function signin(data: ISigninData){
             const{ _id} = user;
 
             //Checking if founded user is deactivaed or not
-            if(user.status === 'Deactivated'){
+            if(user.status === Constants.deactivated){
                 return {msg: "User is Deactivated", status: 200}
             }
             

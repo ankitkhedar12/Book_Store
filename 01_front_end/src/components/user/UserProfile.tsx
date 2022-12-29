@@ -9,6 +9,7 @@ import { IBook } from '../../interfaces/Interface';
 import '../../App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import "react-datepicker/dist/react-datepicker.css";
+import { notify } from '../../constants/notifications';
 
 function UserProfile() {
   const { register, handleSubmit } = useForm()
@@ -17,66 +18,7 @@ function UserProfile() {
     const [endDate, setEndDate] = useState();
   // const [val, onChange] = useState(new Date());
   const navigate = useNavigate();
-  const notify = () => {
-    toast.success('Book Requested', {
-      position: "top-center",
-      autoClose: 1100,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  };
-  const fromdatenotify = () => {
-    toast.warn('Please Select From Date', {
-      position: "top-center",
-      autoClose: 1100,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  };
-  const enddatenotify = () => {
-    toast.warn('Please Select End Date', {
-      position: "top-center",
-      autoClose: 1100,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  };
-  const bookquantitynotify = () => {
-    toast.warn('Book not available', {
-      position: "top-center",
-      autoClose: 1100,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  };
-  const issueerrornotify = () => {
-    toast.warn("You can't add same book more than 1", {
-      position: "top-center",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  };
+
   const[value,setValue]=useState<IBook[]>([]);
   useEffect(  () => {
     getData();
@@ -108,25 +50,25 @@ function UserProfile() {
         method: "post",
         url: `http://localhost:5001/api/issuebook`,
         headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
-        data: {user_id: localStorage.getItem('_id'), book_id: bookid, status: 'Pending', from_date: startDate , to_date: endDate },
+        data: { book_id: bookid, status: 'Pending', from_date: startDate , to_date: endDate },
       }).then((res) => {
         console.log("UserProfile BookRes",res);
 
           switch(res.data.msg){
             case "Book Requested":
-              notify();
+              notify('Book Requested');
               break;
             case "from_date_not_selected":
-              fromdatenotify();
+              notify('Please Select From Date');
               break;
             case "end_date_not_selected":
-              enddatenotify();
+              notify('Please Select End Date')
               break;
             case "Request Exists":
-              issueerrornotify();
+              notify("You can't add same book more than 1");
               break;
             case "Book not available":
-              bookquantitynotify();
+              notify("Book not available");
               break;
             default: 
               console.log("Error in issueBook api calling");
@@ -150,28 +92,30 @@ function UserProfile() {
       <div className='datebox'>
         <div className='date1'>
             <DatePicker 
-                selected={startDate}
-                onChange={(date:any) => setStartDate(date)}
-                selectsStart
-                startDate={startDate}
-                endDate={endDate}
-                // isClearable={true}
-                placeholderText="From Date"
-                closeOnScroll={true}
-                className = 'red-border'
+              dateFormat="yyyy/MM/dd"
+              selected={startDate}
+              onChange={(date:any) => setStartDate(date)}
+              selectsStart
+              startDate={startDate}
+              endDate={endDate}
+              // isClearable={true}
+              placeholderText="From Date"
+              closeOnScroll={true}
+              className = 'red-border'
             />
         </div>
         <div className='date2'>
           <DatePicker
-              selected={endDate}
-              onChange={(date:any) => setEndDate(date)}
-              selectsEnd
-              startDate={startDate}
-              endDate={endDate}
-              minDate={startDate}
-              // isClearable={true}
-              placeholderText="To Date"
-              closeOnScroll={true}
+            dateFormat="yyyy/MM/dd"
+            selected={endDate}
+            onChange={(date:any) => setEndDate(date)}
+            selectsEnd
+            startDate={startDate}
+            endDate={endDate}
+            minDate={startDate}
+            // isClearable={true}
+            placeholderText="To Date"
+            closeOnScroll={true}
           />
         </div>
       </div>

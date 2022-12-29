@@ -4,7 +4,8 @@ import { searchBook } from '../services/userServices/searchBook';
 import { myRequests } from '../services/userServices/myRequests';
 
 export  const IssueBook: RequestHandler = async (req: Request, res: Response)=> {
-    res.status(200).send(await issueBooks(req.body));
+    const response = await issueBooks(req.body, req.query);
+    res.status(200).send(response);
 }
 
 export  const SearchBook: RequestHandler = async (req: Request, res: Response, next: NextFunction)=> {

@@ -12,6 +12,9 @@ const authUser = async (req: Request, res: Response, next: NextFunction) => {
         ) as jwt.JwtPayload;
         
         if (verify) {
+          req.query['id'] = verify.id;
+          req.body['user_id'] = verify.id;
+          console.log("%c VerifyID: ","color: red", verify.id, req.query);
           next()
         }
       }else{

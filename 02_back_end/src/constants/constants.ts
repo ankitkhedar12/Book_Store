@@ -1,5 +1,6 @@
 const Constants = {
-    admin: "admin"
+    admin: "admin",
+    deactivated: 'Deactivated'
 }
 
 

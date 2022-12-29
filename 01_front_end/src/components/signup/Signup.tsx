@@ -8,6 +8,7 @@ import { Inputs } from '../../interfaces/Interface';
 import 'react-toastify/dist/ReactToastify.css';
 import './Signup.css'
 import * as yup from "yup";
+import { loginNotify } from '../../constants/notifications';
  
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
@@ -16,33 +17,9 @@ const schema = yup.object().shape({
 }).required();
 
 export default function Signup () {
-  const userExistnotify = () => {
-    toast('🦄 User Already Exist. Please Login', {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  };
-  const loginNotify = () => {
-    toast('Please Login', {
-      position: "top-center",
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  };
 
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<Inputs>({
+  const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({
     resolver: yupResolver(schema), // yup, joi and even your own.
   });
 
@@ -53,10 +30,10 @@ export default function Signup () {
 
     switch(res.data.msg){
       case "User Already Exist. Please Signin":
-        userExistnotify();
+        loginNotify('User Already Exist. Please Login');
         break;
       case "Please Login":
-        loginNotify();
+        loginNotify('Please Login');
         navigate("/signin", {state:{fromSignup: true}});
         break;
       default:
@@ -69,8 +46,11 @@ export default function Signup () {
     <h2 className='baskerville'>Signup</h2>
       <form onSubmit={onSubmit}>
         <input {...register("name")} placeholder="Name" />
+        <div className="invalid-feedback">{errors.name?.message}</div>
         <input type="email" {...register("email")} placeholder="Email" />
+        <div className="invalid-feedback">{errors.email?.message}</div>
         <input type="password" {...register("password")} placeholder="************" />
+        <div className="invalid-feedback">{errors.password?.message}</div>
         <button type='submit'>Register</button> 
         <button onClick={()=> {navigate("/signin")}}>SignIn</button>
         <ToastContainer />
