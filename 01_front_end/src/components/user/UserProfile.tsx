@@ -96,7 +96,7 @@ function UserProfile() {
           method: "post",
           url: "http://localhost:5001/api/user/searchbook",
           headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
-          data: { searchvalue: searchvalue }
+          data: { searchValue: searchvalue }
         }).then((res)=> {
           console.log("UserProfile Response",res);
           setValue(res.data);

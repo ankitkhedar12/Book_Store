@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 export interface ISigninData{
     email: string;
     password: string;
@@ -38,4 +40,16 @@ export interface IEditStatus{
 
 export interface IUserReqList{
     id: string
+}
+export interface IEditUserStatus{
+    id: string,
+    status: string
+}
+
+export interface ISearchValue{
+    searchValue: string
+}
+
+export interface IJwtPayload{
+    id: string | jwt.JwtPayload
 }

@@ -1,6 +1,6 @@
-import { IssueBookRequest } from '../models/issueRequest';
-import { BookModel } from '../models/bookModel';
-import { IRequest } from '../interfaces/interfaces';
+import { IssueBookRequest } from '../../models/issueRequest';
+import { BookModel } from '../../models/bookModel';
+import { IRequest } from '../../interfaces/interfaces';
 
 export default async function issueBooks(data: IRequest){
   try {

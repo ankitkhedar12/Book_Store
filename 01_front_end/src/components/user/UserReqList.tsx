@@ -17,7 +17,7 @@ function UserReqList() {
 
     const getData=async ()=>{
       await axios({
-        method: "get",
+        method: "post",
         url: "http://localhost:5001/api/userrequestslist",
         headers: { authorization: `Bearer ${localStorage.getItem("token")}`, id: localStorage.getItem("_id") },
         data: {id: localStorage.getItem("_id")}

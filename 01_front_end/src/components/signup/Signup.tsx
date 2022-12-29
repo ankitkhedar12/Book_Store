@@ -47,7 +47,7 @@ export default function Signup () {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    const res = await axios.post("http://localhost:5001/api/signup", {...data, role: 'user', status: 'active'});
+    const res = await axios.post("http://localhost:5001/api/signup", {...data, role: 'user', status: 'Active'});
 
     console.log("Signup Res: ", res);
 

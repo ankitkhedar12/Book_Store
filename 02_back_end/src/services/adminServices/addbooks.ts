@@ -1,7 +1,7 @@
 import { Request, RequestHandler, Response } from 'express';
 import dotenv from 'dotenv';
-import { BookModel } from '../models/bookModel';
-import { IAddBookData } from '../interfaces/interfaces';
+import { BookModel } from '../../models/bookModel';
+import { IAddBookData } from '../../interfaces/interfaces';
 
 
 dotenv.config({

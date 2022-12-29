@@ -1,8 +1,8 @@
-import { IssueBookRequest } from '../models/issueRequest';
-import { IEditStatus } from '../interfaces/interfaces';
+import { IssueBookRequest } from '../../models/issueRequest';
+import { IEditStatus } from '../../interfaces/interfaces';
 
 
-export default async function editStatus(data: IEditStatus){
+export default async function editBookRequestStatus(data: IEditStatus){
     const { status, bookId } = data;
 
     // Update Status

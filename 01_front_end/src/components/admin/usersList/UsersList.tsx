@@ -12,14 +12,12 @@ const UsersList=()=> {
   useEffect(  () => {
     getData();
     }, []);
-  
 
     const getData=async ()=>{
       await axios({
         method: "get",
         url: "http://localhost:5001/api/userslist",
         headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
-        // body: localStorage.getItem("_id")
       }).then((res)=> {
         console.log("Admin Profile Users Response",res);
         setValue(res.data);
@@ -30,10 +28,11 @@ const UsersList=()=> {
 
     await axios({
       method: "put",
-      url: `http://localhost:5001/api/admin/edituserstatus?id=${id}`,
+      url: `http://localhost:5001/api/admin/edituserstatus`,
       headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
-      data: { status: 'Active'},
+      data: { status: 'Active', id },
     }).then((res)=> {
+      console.log('---', res.data)
       getData();
     });
   }
@@ -41,10 +40,11 @@ const UsersList=()=> {
   async function deactivateUser (id:string) {
     await axios({
       method: "put",
-      url: `http://localhost:5001/api/admin/edituserstatus?id=${id}`,
+      url: `http://localhost:5001/api/admin/edituserstatus`,
       headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
-      data: { status: 'Deactivated'},
+      data: { status: 'Deactivated', id},
     }).then((res)=> {
+      console.log('---', res.data)
       getData();
     });
   }

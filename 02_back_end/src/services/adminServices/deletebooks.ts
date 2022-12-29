@@ -1,5 +1,5 @@
-import { BookModel } from '../models/bookModel';
-import { IDeleteBook } from '../interfaces/interfaces';
+import { BookModel } from '../../models/bookModel';
+import { IDeleteBook } from '../../interfaces/interfaces';
 
 export default async function deletebooks(data: IDeleteBook){
   try {

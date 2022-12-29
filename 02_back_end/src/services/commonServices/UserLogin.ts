@@ -3,10 +3,10 @@ import dotenv from 'dotenv';
 // import Login from '../services/UserLogin'
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { User } from '../models/user';
-import envData from '../config/env.config';
-import { Constants } from '../constants/constants';
-import { ISigninData } from '../interfaces/interfaces';
+import { User } from '../../models/user';
+import envData from '../../config/env.config';
+import { Constants } from '../../constants/constants';
+import { ISigninData } from '../../interfaces/interfaces';
 
 dotenv.config({
     path: '.env'

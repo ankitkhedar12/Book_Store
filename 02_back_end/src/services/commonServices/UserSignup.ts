@@ -2,8 +2,8 @@ import { Request, RequestHandler, Response } from 'express';
 import  jwt  from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt'
-import { ISignupData } from '../interfaces/interfaces';
-import { User } from '../models/user';
+import { ISignupData } from '../../interfaces/interfaces';
+import { User } from '../../models/user';
 
 dotenv.config({
     path: '.env'
