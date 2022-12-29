@@ -4,12 +4,12 @@ import { ObjectId } from "mongodb";
 
 export const myRequests = async (userData: IUserReqList)=> {    
     try {
-        const { id } = userData;
+        const { user_id } = userData;
 
         //Fetching book issue requests of particular users using their id
         const data = await IssueBookRequest.aggregate([
             {
-                $match: {"user_id": new ObjectId(id)}
+                $match: {"user_id": new ObjectId(user_id)}
             },
             {
                 $lookup: {

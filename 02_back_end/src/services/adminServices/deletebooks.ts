@@ -5,7 +5,7 @@ export default async function deletebooks(data: IDeleteBook){
   try {
     const { bookId } = data;
 
-    // Delete
+    /** Delete Book */ 
     await BookModel.deleteOne({ "_id": bookId });
     return {msg: "Book Deleted", status: 200};
     

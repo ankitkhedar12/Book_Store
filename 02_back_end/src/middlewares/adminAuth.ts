@@ -1,13 +1,8 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from 'express';
 import { User } from "../models/user";
-import dotenv from 'dotenv';
 import envData from '../config/env.config';
-
-// load the environment variables from the .env file
-dotenv.config({
-  path: '../../.env'
-});
+import { Constants } from "../constants/constants";
 
 const authAdmin = async (req: Request, res: Response, next: NextFunction) => {
   if (req.headers.authorization) {
@@ -23,11 +18,11 @@ const authAdmin = async (req: Request, res: Response, next: NextFunction) => {
           const user = await User.findOne({_id: id})
           const role = user?.role 
 
-            if(role === 'admin'){
+            if(role === Constants.ADMIN){
               next()
             }
             else{
-              console.log("----------not Admin------------")
+              console.log("-----------not Admin------------")
             } 
         }
       }

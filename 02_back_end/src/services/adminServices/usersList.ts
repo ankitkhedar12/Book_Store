@@ -4,10 +4,10 @@ export  const usersList = async ()=> {
     try {
         const users = await User.find({});
 
-        // If users data is available in database
+        /** If users data is available in database */         
         if(users)
         {
-            // return response with user and send to client
+            /** Return response with user */
             return users;
         }
         else

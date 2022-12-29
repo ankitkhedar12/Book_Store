@@ -3,7 +3,7 @@ import { IssueBookRequest } from '../../models/issueRequest';
 
 export  const reqList: RequestHandler = async ()=> {    
     try {
-        //Fetching request data with names of user and book from their id's
+        /** Fetching request data with names of user and book from their id's */
         const data = await IssueBookRequest.aggregate([
             {
                 $lookup: {

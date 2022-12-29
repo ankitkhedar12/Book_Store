@@ -1,10 +1,14 @@
 import mongoose, { ConnectOptions } from "mongoose";
+import dotenv from 'dotenv';
 
-// mongoose.connect('mongodb://localhost:27017/myDB');
-//Connect to database
+dotenv.config({
+  path: '.env'
+});
+
+/** Connect to database */
 try {
     mongoose
-    .connect('mongodb://127.0.0.1:27017/myDB', {
+    .connect(process.env.DB_CONNECTION as string, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     //   useCreateIndex: true,
@@ -31,14 +35,4 @@ try {
 
 const con = mongoose.connection;
 
-// con.on('connected', function(){
-//     console.log("Database is connected successfully");
-// })
-// con.on('disconnected', ()=> {
-//     console.log("Database is disconnected successfully");
-// })
-// con.on('error', console.error.bind(console, 'connection error: '));
-
-
 export { con };
-

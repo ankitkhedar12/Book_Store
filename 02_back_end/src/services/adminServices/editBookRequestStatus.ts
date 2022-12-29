@@ -3,18 +3,20 @@ import { IEditStatus } from '../../interfaces/interfaces';
 
 
 export default async function editBookRequestStatus(data: IEditStatus){
-    const { status, bookId } = data;
+  /** Update Status */
+  try{
+      const { status, bookId } = data;
+      
+      await IssueBookRequest.updateOne(
+        { _id: bookId },
+        {
+          $set: { status: status },
+          $currentDate: { lastModified: true }
+        }
+        )
 
-    // Update Status
-    try{
-        await IssueBookRequest.updateOne(
-            { _id: bookId },
-            {
-              $set: { status: status },
-              $currentDate: { lastModified: true }
-            }
-         )
-         const request = await IssueBookRequest.findOne({_id: bookId})
+        /** Fetching updated list and sending to client */
+        const request = await IssueBookRequest.findOne({_id: bookId})
          console.log(request);
         return ({request, msg: "Book Request updated"});
     }

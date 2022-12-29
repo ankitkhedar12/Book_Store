@@ -16,30 +16,32 @@ export default async function signin(data: ISigninData){
 
         const user = await User.findOne({ email });
 
-        // If user is found
+        /** If user is found */
         if(user)
         {
             const{ _id} = user;
 
-            //Checking if founded user is deactivaed or not
-            if(user.status === Constants.deactivated){
+            /** Checking if founded user is deactivaed or not */
+            if(user.status === Constants.DEACTIVATED){
                 return {msg: "User is Deactivated", status: 200}
             }
             
-            // make sure email and password match
-            // create authenticate method in user model
+            /** 
+             * make sure email and password match 
+             * create authenticate method in user model
+             */
             const isValidPass = await bcrypt.compare(password, user.password)
 
             if(!isValidPass)
             {
-                return {msg: "Invalid Credentials", status: 200}
+                return {msg: "Invalid Credentials", status: 200};
             }
 
-            // generate a signed token with user id and secret
-            const token = jwt.sign({id:user._id}, envData.jwt_secret)
+            /** Generate a signed token with user id and secret */
+            const token = jwt.sign({id:user._id}, envData.jwt_secret);
 
-            // return response with user and send to client
-            if(user.role === Constants.admin){
+            /** Return response with user and send to client */
+            if(user.role === Constants.ADMIN){
                 return {msg: "Admin Login",token, user: {_id, email}};
             }
             return {msg: "Welcome Back",token, user: {_id, email}};

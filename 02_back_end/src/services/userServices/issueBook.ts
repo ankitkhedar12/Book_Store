@@ -2,14 +2,15 @@ import { IssueBookRequest } from '../../models/issueRequest';
 import { BookModel } from '../../models/bookModel';
 import { IRequest } from '../../interfaces/interfaces';
 
+
+
 interface Iid{
     id: string;
 }
 
-export default async function issueBooks(data: IRequest, ID:Iid){
+export default async function issueBooks(data: IRequest){
   try {
-    const { book_id, status, from_date, to_date } = data;
-    const user_id = ID;
+    const {user_id, book_id, status, from_date, to_date } = data;
 
     //Validation if date are selected or not
     if(from_date === undefined){
@@ -21,7 +22,6 @@ export default async function issueBooks(data: IRequest, ID:Iid){
     
     //If user has already added one book, he should not be able to add more
     const reqAlreadyExist = await IssueBookRequest.findOne({ user_id: user_id, book_id: book_id })
-    console.log("%cReqExists: ", 'color: red', reqAlreadyExist);
       if(reqAlreadyExist){
         return {msg: "Request Exists", status: 200};
       }

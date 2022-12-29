@@ -39,7 +39,7 @@ export interface IEditStatus{
 }
 
 export interface IUserReqList{
-    id: string
+    user_id: string
 }
 export interface IEditUserStatus{
     id: string,
