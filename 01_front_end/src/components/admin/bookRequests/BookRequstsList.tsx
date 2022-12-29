@@ -14,44 +14,45 @@ function ReqList() {
     getData();
     }, []);
   
-
+    /** Get List of all Book Requests */
     const getData=async ()=>{
       await axios({
         method: "get",
         url: "http://localhost:5001/api/requestslist",
-        headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
-        
+        headers: { authorization: `Bearer ${localStorage.getItem("token")}`}
       }).then((res)=> {
         console.log("Requests Response: ",res);
         setvalue(res.data);
       });
     }
-    async function acceptReq (id:string) {
 
+    /** Accept particular user request */ 
+    async function acceptReq (id:string) {
       await axios({
         method: "put",
         url: `http://localhost:5001/api/editstatus`,
-        headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
+        headers: { authorization: `Bearer ${localStorage.getItem("token")}`},
         data: { status: 'Accepted', bookId: id},
       }).then(()=> {
         getData();
       });
     }
+
+    /** Reject particular user request */
     async function rejectReq (id:string) {
       await axios({
         method: "put",
         url: `http://localhost:5001/api/editstatus`,
-        headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
+        headers: { authorization: `Bearer ${localStorage.getItem("token")}`},
         data: { status: 'Rejected', bookId: id},
       }).then(()=> {
         getData();
       });
- }
-      async function logout() {
-        localStorage.removeItem("token");
-        localStorage.removeItem("_id");
-        navigate('/signin')  ;  
-      }
+    }
+    async function logout() {
+      localStorage.removeItem("token");
+      navigate('/signin')  ;  
+    }
   return (
     <div>  
       <h2 className='baskerville'>Admin Panel</h2>

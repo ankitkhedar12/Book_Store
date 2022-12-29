@@ -1,11 +1,12 @@
 import { useForm, Resolver } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import axios, { AxiosResponse } from 'axios'
 import { FormValues } from '../../interfaces/Interface';
 import { Navbar } from '../navigationBar/Navbar';
 import 'react-toastify/dist/ReactToastify.css';
 import '../signup/Signup.css'
+import { adminNotify } from '../../constants/notifications';
 
 const resolver: Resolver<FormValues> = async (values) => {
   return {
@@ -23,54 +24,6 @@ const resolver: Resolver<FormValues> = async (values) => {
 
 export default function Login() {
   const navigate = useNavigate();
-  const notify = () => {
-    toast.success('Welcome Back', {
-      position: "top-center",
-      autoClose: 1100,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  };
-  const userNotFound = () => {
-    toast('User not registered!', {
-      position: "top-center",
-      autoClose: 1100,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  };
-  const invalid = () => {
-    toast('Invalid Credentials!', {
-      position: "top-center",
-      autoClose: 1100,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  };
-  const inactive = () => {
-    toast('Your account has been deactivated by Admin', {
-      position: "top-center",
-      autoClose: 1100,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-  };
   
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({ resolver })
   const onSubmit = handleSubmit(async (info) => {
@@ -80,27 +33,25 @@ export default function Login() {
     switch(res.data.msg){
       case "Welcome Back":
         console.log("LoginResponse :",res);
-        notify();
+        adminNotify("Welcome Back");
         localStorage.setItem('token', res.data.token);
-        localStorage.setItem('_id', res.data.user._id);
         setTimeout(()=>navigate('/userprofile'),1000)
         break;
       case "User not registered":
-        userNotFound();
+        adminNotify('User not registered!');
         break;
       case "User is Deactivated":
-        inactive();
+        adminNotify('Your account has been deactivated by Admin');
         break;
       case "Invalid Credentials":
-        invalid();
+        adminNotify('Invalid Credentials!');
         break;
       case "Admin Login":
         localStorage.setItem('token', res.data.token);
-        localStorage.setItem('_id', res.data.user._id);
         navigate("/admin", {state:{fromSignup: true}})
         break;
       default: 
-        console.log("Error")
+        console.log("Error");
     }
   });
   return (
@@ -114,19 +65,8 @@ export default function Login() {
         <input type="password" {...register("password")} placeholder="**************" />
         <button type='submit'>Login</button>
       </form>
-      {/* <button>Forget Password</button> */}
-        <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
+      <button>Forget Password</button>
+        <ToastContainer />
     </>
   );
 }

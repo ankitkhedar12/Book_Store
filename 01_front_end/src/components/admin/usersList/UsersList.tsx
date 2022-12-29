@@ -17,7 +17,7 @@ const UsersList=()=> {
       await axios({
         method: "get",
         url: "http://localhost:5001/api/userslist",
-        headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
+        headers: { authorization: `Bearer ${localStorage.getItem("token")}`, },
       }).then((res)=> {
         console.log("Admin Profile Users Response",res);
         setValue(res.data);
@@ -29,7 +29,7 @@ const UsersList=()=> {
     await axios({
       method: "put",
       url: `http://localhost:5001/api/admin/edituserstatus`,
-      headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
+      headers: { authorization: `Bearer ${localStorage.getItem("token")}`, },
       data: { status: 'Active', id },
     }).then((res)=> {
       console.log('---', res.data)
@@ -41,7 +41,7 @@ const UsersList=()=> {
     await axios({
       method: "put",
       url: `http://localhost:5001/api/admin/edituserstatus`,
-      headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
+      headers: { authorization: `Bearer ${localStorage.getItem("token")}`, },
       data: { status: 'Deactivated', id},
     }).then((res)=> {
       console.log('---', res.data)

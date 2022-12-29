@@ -1,6 +1,4 @@
-import { Request, RequestHandler, Response } from 'express';
 import dotenv from 'dotenv';
-// import Login from '../services/UserLogin'
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { User } from '../../models/user';

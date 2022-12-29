@@ -1,13 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from 'express';
-import { User } from "../models/user";
-import dotenv from 'dotenv';
-import { IJwtPayload } from "../interfaces/interfaces";
-
-// load the environment variables from the .env file
-dotenv.config({
-  path: '../../.env'
-});
+import envData from '../config/env.config';
 
 const authUser = async (req: Request, res: Response, next: NextFunction) => {
   if (req.headers.authorization) {
@@ -15,39 +8,23 @@ const authUser = async (req: Request, res: Response, next: NextFunction) => {
     
     try {
       if (token) {
-        const verify = jwt.verify(token,"JWT_SECRET"  // keys.jwtSecret as string
+        const verify = jwt.verify(token, envData.jwt_secret                      // keys.jwtSecret as string
         ) as jwt.JwtPayload;
         
         if (verify) {
-          const id  = verify.id;
-          console.log("---Id---", id);
-
-          const user = await User.findOne({_id: req.headers.id})
-          const role = user?.role
-            // const { id } = decode   
-
-            if(role === 'user'){
-              next()
-            }
-            else{
-              console.log("----------not User------------")
-            }
-          // next();
+          next()
         }
+      }else{
+        console.log("Token Not Found.");
       }
     }
     catch(error){
-      console.log("Error in userAuth: ",error);
+      res.status(401).send({
+        message: "YOUR SESSION HAS EXPIRED. PLEASE LOGIN AGAIN.",
+        success: false,
+        error: "token-expired",
+      })
     }
-
-    // jwt.verify(token, "JWT_SECRET",  (err, decode: IJwtPayload) {
-
-     
-    //   console.log("Payload: ", decode)
-
-      
-    //   // next();
-    // });
-  } 
 };
+}
 export default authUser;

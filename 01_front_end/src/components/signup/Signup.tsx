@@ -70,21 +70,10 @@ export default function Signup () {
       <form onSubmit={onSubmit}>
         <input {...register("name")} placeholder="Name" />
         <input type="email" {...register("email")} placeholder="Email" />
-        <input type="text" {...register("password")} placeholder="************" />
+        <input type="password" {...register("password")} placeholder="************" />
         <button type='submit'>Register</button> 
         <button onClick={()=> {navigate("/signin")}}>SignIn</button>
-        <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
+        <ToastContainer />
       </form>
       
     </>

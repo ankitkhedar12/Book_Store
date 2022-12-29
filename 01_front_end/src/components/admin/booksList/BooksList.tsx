@@ -20,7 +20,7 @@ const BooksList=()=> {
       await axios({
         method: "get",
         url: "http://localhost:5001/api/admin/books",
-        headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
+        headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
       }).then((res)=> {
         console.log("Admin Profile Response",res);
         setValue(res.data);
@@ -32,7 +32,7 @@ const BooksList=()=> {
         method: "post",
         // url: `http://localhost:5001/api/deletebooks?id=${id}`,
         url: `http://localhost:5001/api/deletebooks`,
-        headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
+        headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
         data: { bookId: id }
       })
       getData();

@@ -49,7 +49,3 @@ export interface IEditUserStatus{
 export interface ISearchValue{
     searchValue: string
 }
-
-export interface IJwtPayload{
-    id: string | jwt.JwtPayload
-}

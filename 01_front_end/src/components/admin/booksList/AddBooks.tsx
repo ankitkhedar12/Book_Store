@@ -1,18 +1,16 @@
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
 import { yupResolver } from '@hookform/resolvers/yup';
 import AdminNavigation from '../AdminNavigation';
 import * as yup from "yup";
-import 'react-toastify/dist/ReactToastify.css';
-import '../../signup/Signup.css';
-import '../usersList/userlist.css'
 import { IBook } from '../../../interfaces/Interface';
+import { adminNotify } from '../../../constants/notifications';
 
 const schema = yup.object().shape({
-    title: yup.string().required(),
-    author: yup.string().required(),
+    title: yup.string().min(2, "Minium 2 character are required").required(),
+    author: yup.string().max(35, "Max 35 characters").required(),
     price: yup.number().required(),
     quantity: yup.number().required()
   }).required();
@@ -23,46 +21,20 @@ const AddBook=()=> {
       });
     const navigate = useNavigate();
 
-    const addedNotify = () => {
-        toast('Book Added', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        });
-    };
-
-    const bookExistnotify = () => {
-        toast('Book Already Exist.', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        });
-    };
-
     const onSubmit = handleSubmit(async (data) => {
       await axios({
         method: "post",
         url: "http://localhost:5001/api/addbooks",
-        headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
+        headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
         data: data,
       }).then((res)=> {
         console.log("AddBooks Response",res);
         switch(res.data.msg){
           case "Book Already Exist":
-            bookExistnotify();
+            adminNotify('Book Already Exist.')
             break;
           case "Book Added":
-            addedNotify();
+            adminNotify('Book Added')
             break;
           default:
             console.log("Error while adding Books")
@@ -81,18 +53,7 @@ const AddBook=()=> {
         <button type='submit'>Add Books</button> 
         <button onClick={()=> {navigate('/admin/books')}}>All Books</button>
       </form>
-      <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
+      <ToastContainer />
     </div>
   )
 }

@@ -19,7 +19,7 @@ function UserReqList() {
       await axios({
         method: "post",
         url: "http://localhost:5001/api/userrequestslist",
-        headers: { authorization: `Bearer ${localStorage.getItem("token")}`, id: localStorage.getItem("_id") },
+        headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
         data: {id: localStorage.getItem("_id")}
       }).then((res)=> {
         console.log("User ReqList: ",res);

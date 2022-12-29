@@ -4,7 +4,6 @@ import { useForm} from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import DatePicker from "react-datepicker";
 import axios from 'axios';
-import logo from '../../logo.svg';
 import UserNavigation from './UserNavigation';
 import { IBook } from '../../interfaces/Interface';
 import '../../App.css';
@@ -95,7 +94,7 @@ function UserProfile() {
     await axios({
           method: "post",
           url: "http://localhost:5001/api/user/searchbook",
-          headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
+          headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
           data: { searchValue: searchvalue }
         }).then((res)=> {
           console.log("UserProfile Response",res);
@@ -108,7 +107,7 @@ function UserProfile() {
       await axios({
         method: "post",
         url: `http://localhost:5001/api/issuebook`,
-        headers: { authorization: `Bearer ${localStorage.getItem("token")}`,id: localStorage.getItem("_id") },
+        headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
         data: {user_id: localStorage.getItem('_id'), book_id: bookid, status: 'Pending', from_date: startDate , to_date: endDate },
       }).then((res) => {
         console.log("UserProfile BookRes",res);
@@ -205,18 +204,7 @@ function UserProfile() {
       </table>
       
       <button onClick={logout}>Logout</button>
-      <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
+      <ToastContainer />
     </div>
   );
 }
