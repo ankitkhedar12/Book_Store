@@ -22,9 +22,6 @@ function UserProfile() {
   const[value,setValue]=useState<IBook[]>([]);
   useEffect(  () => {
     getData();
-    // console.log("Date",val);
-    console.log("StartDate", startDate);
-    console.log("EndDate", endDate);
     }, [searchvalue]);
 
     const onSubmit = handleSubmit(async (info) => {
@@ -52,7 +49,7 @@ function UserProfile() {
         headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
         data: { book_id: bookid, status: 'Pending', from_date: startDate , to_date: endDate },
       }).then((res) => {
-        console.log("UserProfile BookRes",res);
+        // console.log("UserProfile BookRes",res);
 
           switch(res.data.msg){
             case "Book Requested":
@@ -70,6 +67,9 @@ function UserProfile() {
             case "Book not available":
               notify("Book not available");
               break;
+            case "Issue Date cannot be in past":
+              notify("Issue Date cannot be in past");
+              break;
             default: 
               console.log("Error in issueBook api calling");
           }
@@ -81,6 +81,14 @@ function UserProfile() {
       localStorage.removeItem("_id");
       navigate('/signin')  ;  
     }
+
+    const onDateChange = (dates:any) => {
+      const [start, end] = dates;
+      console.log("Start: ", start, "End: ", end);
+      setStartDate(start);
+      setEndDate(end);
+    };
+
   return (
     <div className="">
       <UserNavigation />
@@ -89,10 +97,28 @@ function UserProfile() {
           <input {...register("search")} className='search' type="text" style={{textAlign: 'center'}} placeholder='Search' name="search" id="search" />
           <button type='submit' className='buttonSearch' > Search </button>
       </form>
-      <div className='datebox'>
+
+
+      <DatePicker
+      dateFormat="dd/MM/yyyy"
+      selected={startDate}
+      onChange={onDateChange}
+      startDate={startDate}
+      endDate={endDate}
+      selectsRange
+      inline
+      placeholderText="From Date"
+      closeOnScroll={true}
+      className = 'red-border'
+      // excludeDates={[new Date(), subDays(new Date(), 1)]}
+      // minDate={new Date()}
+      // maxDate={(new Date(), 365)}
+    />
+
+      {/* <div className='datebox'>
         <div className='date1'>
             <DatePicker 
-              dateFormat="yyyy/MM/dd"
+              dateFormat="dd/MM/yyyy"
               selected={startDate}
               onChange={(date:any) => setStartDate(date)}
               selectsStart
@@ -106,7 +132,7 @@ function UserProfile() {
         </div>
         <div className='date2'>
           <DatePicker
-            dateFormat="yyyy/MM/dd"
+            dateFormat="dd/MM/yyyy"
             selected={endDate}
             onChange={(date:any) => setEndDate(date)}
             selectsEnd
@@ -118,7 +144,7 @@ function UserProfile() {
             closeOnScroll={true}
           />
         </div>
-      </div>
+      </div> */}
       <table className='blue'>
         <thead>
           <tr>
