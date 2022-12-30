@@ -56,10 +56,7 @@ function UserProfile() {
               notify('Book Requested');
               break;
             case "from_date_not_selected":
-              notify('Please Select From Date');
-              break;
-            case "end_date_not_selected":
-              notify('Please Select End Date')
+              notify('Please Select Date');
               break;
             case "Request Exists":
               notify("You can't add same book more than 1");
