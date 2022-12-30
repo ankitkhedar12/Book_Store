@@ -1,4 +1,3 @@
-
 export const Constants = 'Hello'
 export const AdminConstants = {
     ACCEPTED : 'Accepted',

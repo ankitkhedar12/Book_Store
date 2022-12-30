@@ -16,7 +16,6 @@ export default function Routess  ()  {
     return (
         <>
             <Routes>
-                <Route path="/" element={<Home/>} />
                 <Route path="/signin" element={<Login/>} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/userprofile" element={<UserProfile/>} />
@@ -26,6 +25,7 @@ export default function Routess  ()  {
                 <Route path='/admin/requests' element={<ReqList/>} />
                 <Route path='/user/requests' element={<UserReqList/>} />
                 <Route path='/admin/addBook' element={<AddBook/>} />
+                <Route path="/" element={<Home/>} />
                 <Route path='*' element={ <NoMatch/> } />
             </Routes>
         </>
