@@ -14,13 +14,13 @@ function UserReqList() {
     getData();
     }, []);
   
-
+    /** API to get users list */
     const getData=async ()=>{
       await axios({
         method: "post",
         url: "http://localhost:5001/api/userrequestslist",
         headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
-        data: {id: localStorage.getItem("_id")}
+        // data: {id: localStorage.getItem("_id")}
       }).then((res)=> {
         console.log("User ReqList: ",res);
         setvalue(res.data);
@@ -28,7 +28,6 @@ function UserReqList() {
     }
       async function logout() {
         localStorage.removeItem("token");
-        localStorage.removeItem("_id");
         navigate('/signin')  ;  
       }
   return (

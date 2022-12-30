@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { AdminConstants } from '../../../constants/Constants';
 import AdminNavigation from '../AdminNavigation';
 import { IRequest } from '../../../interfaces/Interface';
 import '../../signup/Signup.css';
@@ -8,8 +9,8 @@ import '../usersList/userlist.css'
 
 function ReqList() {
   const navigate = useNavigate();
-
   const[value,setvalue]=useState<IRequest[]>([]);
+
   useEffect(  () => {
     getData();
     }, []);
@@ -21,7 +22,7 @@ function ReqList() {
         url: "http://localhost:5001/api/requestslist",
         headers: { authorization: `Bearer ${localStorage.getItem("token")}`}
       }).then((res)=> {
-        console.log("Requests Response: ",res);
+        console.log("Book Requests List Response: ",res);
         setvalue(res.data);
       });
     }
@@ -32,7 +33,7 @@ function ReqList() {
         method: "put",
         url: `http://localhost:5001/api/editstatus`,
         headers: { authorization: `Bearer ${localStorage.getItem("token")}`},
-        data: { status: 'Accepted', bookId: id},
+        data: { status: AdminConstants.ACCEPTED, bookId: id},
       }).then(()=> {
         getData();
       });
@@ -44,11 +45,12 @@ function ReqList() {
         method: "put",
         url: `http://localhost:5001/api/editstatus`,
         headers: { authorization: `Bearer ${localStorage.getItem("token")}`},
-        data: { status: 'Rejected', bookId: id},
+        data: { status: AdminConstants.REJECTED, bookId: id},
       }).then(()=> {
         getData();
       });
     }
+
     async function logout() {
       localStorage.removeItem("token");
       navigate('/signin')  ;  

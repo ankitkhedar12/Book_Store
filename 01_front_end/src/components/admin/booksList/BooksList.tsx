@@ -7,15 +7,14 @@ import '../usersList/userlist.css'
 import { IBook } from '../../../interfaces/Interface';
 
 const BooksList=()=> {
-
   const navigate = useNavigate();
-
   const[value,setValue]=useState<IBook[]>([]);
+
   useEffect(  () => {
     getData();
     }, []);
-  
-
+    
+    /** Calling API to get list of Books */
     const getData=async ()=>{
       await axios({
         method: "get",
@@ -26,6 +25,8 @@ const BooksList=()=> {
         setValue(res.data);
       });
     }
+
+    /** API to delete book through button click */
     async function deleteBook(id: string){
       console.log("DeleteBook Id",id)
       await axios({
@@ -37,9 +38,9 @@ const BooksList=()=> {
       })
       getData();
     }
+
     function logout() {
       localStorage.removeItem("token");
-      localStorage.removeItem("_id");
       navigate('/signin')  ;  
     }
 

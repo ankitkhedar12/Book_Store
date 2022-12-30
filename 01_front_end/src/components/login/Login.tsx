@@ -26,10 +26,10 @@ export default function Login() {
   const navigate = useNavigate();
   
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({ resolver })
+
+  /** On Form Submit calling Login API */
   const onSubmit = handleSubmit(async (info) => {
-    console.log("Info:",info)
     const res: AxiosResponse<any, any> = await axios.post("http://localhost:5001/api/signin", info)
-    
     switch(res.data.msg){
       case "Welcome Back":
         console.log("LoginResponse :",res);
@@ -57,7 +57,7 @@ export default function Login() {
   return (
     <>
       <Navbar />
-        <h2 className='baskerville'>Signin</h2>
+      <h2 className='baskerville'>Signin</h2>
       <form onSubmit={onSubmit}>
         <input {...register("email")} placeholder="Email" />
         {errors?.email && <p>{errors.email.message}</p>}

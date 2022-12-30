@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { AdminConstants } from '../../../constants/Constants';
 import AdminNavigation from '../AdminNavigation';
 import { IUser } from '../../../interfaces/Interface';
 import '../../signup/Signup.css';
@@ -13,6 +14,7 @@ const UsersList=()=> {
     getData();
     }, []);
 
+    /** Calling API to get list of Users */
     const getData=async ()=>{
       await axios({
         method: "get",
@@ -24,27 +26,27 @@ const UsersList=()=> {
       });
     }
   
+    /** Calling API to Edit Status of user(Active) */
   async function activateUser (id:string) {
-
     await axios({
       method: "put",
       url: `http://localhost:5001/api/admin/edituserstatus`,
       headers: { authorization: `Bearer ${localStorage.getItem("token")}`, },
-      data: { status: 'Active', id },
+      data: { status: AdminConstants.STATUS_ACTIVE, id },
     }).then((res)=> {
       console.log('---', res.data)
       getData();
     });
   }
 
+  /** Calling API to Edit Status of user(InActive) */
   async function deactivateUser (id:string) {
     await axios({
       method: "put",
       url: `http://localhost:5001/api/admin/edituserstatus`,
       headers: { authorization: `Bearer ${localStorage.getItem("token")}`, },
-      data: { status: 'Deactivated', id},
+      data: { status: AdminConstants.STATUS_DEACTIVATED, id },
     }).then((res)=> {
-      console.log('---', res.data)
       getData();
     });
   }

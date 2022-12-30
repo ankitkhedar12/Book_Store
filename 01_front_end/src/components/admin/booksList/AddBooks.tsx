@@ -6,15 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import AdminNavigation from '../AdminNavigation';
 import * as yup from "yup";
 import '../../signup/Signup.css';
-import { IBook } from '../../../interfaces/Interface';
+import { IBook, IFormInputs } from '../../../interfaces/Interface';
 import { adminNotify } from '../../../constants/notifications';
-
-interface IFormInputs {
-  title: string
-  author: string
-  price: number
-  quantity: number
-}
 
 const schema = yup.object().shape({
     title: yup.string().min(2, "Minium 2 character").max(35, "Max 35 characters").required('Required'),
@@ -25,10 +18,11 @@ const schema = yup.object().shape({
 
 const AddBook=()=> {
     const { register, handleSubmit, formState: {errors} } = useForm<IBook>({
-        resolver: yupResolver(schema), 
+        resolver: yupResolver(schema),
       });
     const navigate = useNavigate();
 
+    /** OnSubmit Calling API to add book */
     const onSubmit: SubmitHandler<IFormInputs> =(async (data) => {
       await axios({
         method: "post",

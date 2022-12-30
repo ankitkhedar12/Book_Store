@@ -34,3 +34,9 @@ export interface Inputs {
     password: string;
   };
   
+export interface IFormInputs {
+    title: string
+    author: string
+    price: number
+    quantity: number
+  }  

@@ -1,14 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { Navbar } from '../navigationBar/Navbar';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Inputs } from '../../interfaces/Interface';
+import { loginNotify } from '../../constants/notifications';
+import { SignupConstants } from '../../constants/Constants';
+import { yupResolver } from '@hookform/resolvers/yup';
 import 'react-toastify/dist/ReactToastify.css';
 import './Signup.css'
 import * as yup from "yup";
-import { loginNotify } from '../../constants/notifications';
  
 const schema = yup.object().shape({
   name: yup.string().required('Name is required'),
@@ -17,17 +18,20 @@ const schema = yup.object().shape({
 }).required();
 
 export default function Signup () {
-
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({
     resolver: yupResolver(schema), // yup, joi and even your own.
   });
 
+  /** On form submit calling Signup API */
   const onSubmit = handleSubmit(async (data) => {
-    const res = await axios.post("http://localhost:5001/api/signup", {...data, role: 'user', status: 'Active'});
+    const res = await axios.post("http://localhost:5001/api/signup", 
+    {...data, 
+      role: SignupConstants.ROLE, 
+      status: SignupConstants.STATUS
+    });
 
     console.log("Signup Res: ", res);
-
     switch(res.data.msg){
       case "User Already Exist. Please Signin":
         loginNotify('User Already Exist. Please Login');

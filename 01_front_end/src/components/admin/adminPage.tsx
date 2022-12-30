@@ -1,10 +1,9 @@
 // import AdminNavigation from "./AdminNavigation";
 import UsersList from './usersList/UsersList';
 import { useLocation } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastButton } from '../notificationPopup';
 import { adminNotify } from '../../constants/notifications';
 
 export default function Admin() {
@@ -17,7 +16,6 @@ export default function Admin() {
   return (
     <div className="App">
       <UsersList/>
-      {/* <ToastButton message='Hello World!' /> */}
       <ToastContainer />
     </div>
   );
