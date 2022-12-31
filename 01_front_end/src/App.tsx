@@ -1,5 +1,6 @@
 import './App.css';
-import Routess from './routes/Routes';
+import PrivateRoutes from './routes/PrivateRoutes';
+import PublicRoutes from './routes/PublicRoutes';
 // import { Navbar } from './components/navigationBar/Navbar';
 
 function App() {
@@ -7,7 +8,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         {/* <Navbar /> */}
-        <Routess />
+        <PublicRoutes />
+        <PrivateRoutes />
       </header>
     </div>
   );

@@ -29,6 +29,8 @@ export default function Login() {
 
   /** On Form Submit calling Login API */
   const onSubmit = handleSubmit(async (info) => {
+    // const { email, password } = info;
+    // dispatch(authActions.login({ username, password }));
     const res: AxiosResponse<any, any> = await axios.post("http://localhost:5001/api/signin", info)
     switch(res.data.msg){
       case "Welcome Back":

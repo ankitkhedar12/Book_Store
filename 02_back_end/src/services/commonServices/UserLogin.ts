@@ -38,7 +38,7 @@ export default async function signin(data: ISigninData){
             }
 
             /** Generate a signed token with user id and secret */
-            const token = jwt.sign({id:user._id}, envData.jwt_secret);
+            const token = jwt.sign({id:user._id, role: user.role}, envData.jwt_secret);
 
             /** Return response with user and send to client */
             if(user.role === Constants.ADMIN){

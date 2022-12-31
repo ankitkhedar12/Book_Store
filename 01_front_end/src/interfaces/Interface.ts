@@ -40,3 +40,8 @@ export interface IFormInputs {
     price: number
     quantity: number
   }  
+
+export interface IDecodedToken{
+  id: string,
+  role: string
+}
