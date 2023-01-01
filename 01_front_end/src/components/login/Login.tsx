@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm, Resolver } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -12,17 +13,18 @@ const resolver: Resolver<FormValues> = async (values) => {
   return {
     values: values.email ? values : {},
     errors: !values.email
-      ? {
-          email: {
-            type: 'required',
-            message: 'This is required.',
-          },
-        }
-      : {},
+    ? {
+      email: {
+        type: 'required',
+        message: 'This is required.',
+      },
+    }
+    : {},
   };
 };
 
 export default function Login() {
+  const [isLoggedIn, setLoggedIn ] = useState('false');
   const navigate = useNavigate();
   
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({ resolver })
@@ -49,7 +51,9 @@ export default function Login() {
         adminNotify('Invalid Credentials!');
         break;
       case "Admin Login":
+        setLoggedIn('true');
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('isLoggedIn', isLoggedIn);
         navigate("/admin", {state:{fromSignup: true}})
         break;
       default: 
