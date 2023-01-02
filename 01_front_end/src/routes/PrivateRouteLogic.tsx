@@ -1,14 +1,10 @@
 import { FunctionComponent, useState, useEffect } from 'react';   
-// import { PrivateRouteProps } from "src/root/routing/interfaces/PrivateRouteProps";  
-import jwt_decode from "jwt-decode";
-import { Navigate, Route, useNavigate, useLocation } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux";
-import { IDecodedToken } from "../interfaces/Interface";
+// import jwt_decode from "jwt-decode";
+import { Navigate, Route, useLocation } from "react-router-dom";
+// import { IDecodedToken } from "../interfaces/Interface";
 
 export function PrivateRouteLogic({ children }:any) {  
-  // const dispatch = useDispatch();
   const [isLoggedIn, setLoggedIn ] =useState(false);
-  // const IsLoggedIn = useSelector((state: any) => state.count.value);
 
   const accessToken = () => localStorage.getItem("token") as string;
   // const decodedToken: IDecodedToken = jwt_decode(accessToken);

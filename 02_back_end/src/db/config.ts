@@ -32,7 +32,6 @@ try {
   console.log(error);
 }
 
+const connection = mongoose.connection;
 
-const con = mongoose.connection;
-
-export { con };
+export { connection };

@@ -8,7 +8,7 @@ const authUser = async (req: Request, res: Response, next: NextFunction) => {
     
     try {
       if (token) {
-        const verify = jwt.verify(token, envData.jwt_secret                      // keys.jwtSecret as string
+        const verify = jwt.verify(token, envData.jwt_secret                                        // keys.jwtSecret as string
         ) as jwt.JwtPayload;
         
         if (verify) {
