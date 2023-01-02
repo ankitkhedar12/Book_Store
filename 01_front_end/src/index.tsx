@@ -5,7 +5,6 @@ import App from './App';
 import 'tachyons';
 import {BrowserRouter} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-// import Routess from './routes/Routes';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
