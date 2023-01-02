@@ -1,19 +1,19 @@
-function counterReducer2(state: any = { value2: 0 }, action: any) {
-    if (action.type === "incrementAction2") {
+function counterReducer(state: any = { isLoggedIn: false }, action: any) {
+    if (action.type === "incrementAction") {
         // console.log("reducer called", action.payload);
         
         return {
         ...state,
-        value2: state.value2 + action.payload,
+        value2: state.value + action.payload,
         };
     }
-    if (action.type === "decrementAction2") {
-        return {
-        ...state,
-        value2: state.value2 - action.payload,
-        };
-    }
+    // if (action.type === "decrementAction") {
+    //     return {
+    //     ...state,
+    //     value2: state.value - action.payload,
+    //     };
+    // }
 
     return state;
 }
-export default counterReducer2;  
+export default counterReducer;  
