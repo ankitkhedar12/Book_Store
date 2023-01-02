@@ -56,7 +56,7 @@ function UserProfile() {
             case "Book Requested":
               notify('Book Requested');
               break;
-            case "from_date_not_selected":
+            case "Date_not_selected":
               notify('Please Select Date');
               break;
             case "Request Exists":

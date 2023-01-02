@@ -23,6 +23,7 @@
     "react-datetime-picker": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.40.0",
+    "react-jwt": "^1.1.7",
     "react-promise": "^3.0.2",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",

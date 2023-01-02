@@ -2,13 +2,17 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios'
 import AdminNavigation from '../AdminNavigation';
+import { useSelector, useDispatch } from "react-redux";
 import '../../signup/Signup.css';
 import '../usersList/userlist.css'
 import { IBook } from '../../../interfaces/Interface';
+import { loginAction } from '../../../redux/actions';
 
 const BooksList=()=> {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const[value,setValue]=useState<IBook[]>([]);
+  const userIsLoggedIn: boolean = useSelector((state: any) => state.user.isLoggedIn);
 
   useEffect(  () => {
     getData();
@@ -41,7 +45,10 @@ const BooksList=()=> {
 
     function logout() {
       localStorage.removeItem("token");
-      navigate('/signin')  ;  
+      localStorage.removeItem("isLoggedIn");
+      console.log("Booklist 123: ", userIsLoggedIn);
+      dispatch(loginAction(false));
+      navigate('/signin')  ;
     }
 
   return (

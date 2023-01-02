@@ -2,6 +2,7 @@ import { IssueBookRequest } from '../../models/issueRequest';
 import { BookModel } from '../../models/bookModel';
 import { IRequest } from '../../interfaces/interfaces';
 import dayjs from 'dayjs';
+import min from 'dayjs';
 
 export default async function issueBooks(data: IRequest){
   try {
@@ -11,13 +12,12 @@ export default async function issueBooks(data: IRequest){
     
     /** Validation if date are selected or not */
     if(from_date === undefined){
-      return {msg: "from_date_not_selected", status: 200};
+      return {msg: "Date_not_selected", status: 200};
     }
 
     /** Validation if selected date is not earlier than today */
-    const extractedDay = formattedStartDate.substring(0, formattedStartDate.indexOf('/'));
-    if(dayjs().date() > (extractedDay as unknown as number)){
-      console.log("Date cannot be in past");
+    if(dayjs(from_date).isBefore(dayjs(), 'date')){
+      console.log("Date cannot be in Past ");
       return {msg: "Issue Date cannot be in past", status: 200};
     }
     
