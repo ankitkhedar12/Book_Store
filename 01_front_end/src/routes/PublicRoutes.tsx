@@ -20,6 +20,7 @@ export default function PublicRoutes  ()  {
                 { /** Public Routes */ }
                 <Route path="/signin" element={<Login/>} />
                 <Route path="/signup" element={<Signup />} />
+
                 <Route path="/" element={<Home/>} />
                 <Route path='*' element={ <NoMatch/> } />
 
@@ -80,6 +81,7 @@ export default function PublicRoutes  ()  {
                         </PrivateRouteLogic>
                     }
                 />
+
             </Routes>
         </>
     );

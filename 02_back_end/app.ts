@@ -2,9 +2,9 @@ import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import routes from './src/routers/userRoutes'
-import { con } from './src/db/config';
+import { connection } from './src/db/config';
 
-// load the environment variables from the .env file
+/** load the environment variables from the .env file */
 dotenv.config({
   path: '.env'
 });
@@ -17,29 +17,30 @@ class Server {
   public app = express();
 }
 
-// initialize server server.app
+/** Initialize server server.app */
 const server = new Server();
 
-//Mongodb connecion response
-con.on('connected', function(){
+/** Mongodb connecion response */
+connection.on('connected', function(){
   console.log("Database is connected successfully");
 })
-con.on('disconnected', ()=> {
+connection.on('disconnected', ()=> {
   console.log("Database is disconnected successfully");
 })
-con.on('error', console.error.bind(console, 'connection error: '));
+connection.on('error', console.error.bind(console, 'connection error: '));
 
-//*  Middlewares  *//
+/**  Middlewares  */
 server.app.use(cors())
-// parse requests of content-type - application/json
+
+/** Parse requests of content-type - application/json */ 
 server.app.use(express.json());
 server.app.use(express.urlencoded({
   extended: true
 }));
 
-// Routes middleware //
+/** Routes middleware */
 server.app.use('/api/', routes);
 
-// make server listen on some port //
+/** Make server listen on some port */
 const port = process.env.APP_PORT;
 server.app.listen(port, () => console.log(`> Listening on port ${port}`));
