@@ -24,6 +24,14 @@ const AddBook=()=> {
 
     /** OnSubmit Calling API to add book */
     const onSubmit: SubmitHandler<IFormInputs> =(async (data) => {
+      const input = document.querySelector('input[type="file"]') as HTMLInputElement;
+      console.log("Picture: ", input);
+
+        const file = input.files![0];
+        const base64 = await convertToBase64(file)
+        console.log("Base64: ", base64);
+
+
       await axios({
         method: "post",
         url: "http://localhost:5001/api/addbooks",
@@ -43,6 +51,20 @@ const AddBook=()=> {
         }
       });
     });
+
+    /** Function to convert images to base64 */
+    const convertToBase64 = (file: any) => {
+      return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => {
+          resolve(fileReader.result);
+        };
+        fileReader.onerror = (error) => {
+          reject(error);
+        };
+      });
+    };
   return (
     <div>  
       <h2 className='baskerville'>Admin Panel</h2>
@@ -67,6 +89,7 @@ const AddBook=()=> {
           className={`form-control ${errors.quantity ? 'is-invalid' : ''}`} 
         />
         <div className="invalid-feedback">{errors.quantity && "Required"}</div>
+        <input type="file" {...register("picture")} placeholder="Picture" />
         <button type='submit'>Add Books</button> 
         <button onClick={()=> {navigate('/admin/books')}}>All Books</button>
       </form>

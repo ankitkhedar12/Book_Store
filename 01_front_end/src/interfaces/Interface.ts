@@ -3,7 +3,8 @@ export interface IBook{
     title: string,
     author: string,
     price: number,
-    quantity: number
+    quantity: number,
+    picture: string
   }
 
 export interface IRequest{
@@ -38,7 +39,8 @@ export interface IFormInputs {
     title: string
     author: string
     price: number
-    quantity: number
+    quantity: number,
+    picture: string
   }  
 
 export interface IDecodedToken{
